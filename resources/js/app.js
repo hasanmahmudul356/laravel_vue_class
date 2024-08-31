@@ -5,6 +5,15 @@ Vue.use(VueRouter);
 import App from './App.vue'
 import route from './routes'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios);
+
+import httpMixin from "./mixins/httpMixin";
+import commonMixin from "./mixins/commonMixin";
+Vue.mixin(httpMixin);
+Vue.mixin(commonMixin);
+
 const router = new VueRouter({
     mode : 'history',
     routes : route,
@@ -14,5 +23,5 @@ const router = new VueRouter({
 const vue = new Vue({
     el : '#app',
     components : {App},
-    router
+    router,axios
 });
