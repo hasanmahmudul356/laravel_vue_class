@@ -15,11 +15,12 @@
                 </td>
             </tr>
         </data-table>
-        <form-modal :form-data="formData">
+        <form-modal @submit="submitForm()">
             <div class="row">
                 <div class="col-md-12">
                     <label>Category Name</label>
-                    <input v-model="formData.name" class="form-control" type="text">
+                    <input v-validate="'required'" v-model="formData.name" name="name" class="form-control" type="text">
+                    <span>{{ errors.first('name') }}</span>
                 </div>
             </div>
         </form-modal>
@@ -42,6 +43,7 @@ export default {
     },
     mounted() {
         this.getDataList();
+        this.$set(this.formData, 'name', '');
     }
 }
 </script>

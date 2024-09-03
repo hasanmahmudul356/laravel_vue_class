@@ -14,6 +14,17 @@ import commonMixin from "./mixins/commonMixin";
 Vue.mixin(httpMixin);
 Vue.mixin(commonMixin);
 
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate, {
+    events : 'input',
+    fieldsBagName : ''
+})
+import Vuex from 'vuex'
+Vue.use(Vuex);
+
+import {store as storeData} from "./store";
+const store = new Vuex.Store(storeData)
+
 const router = new VueRouter({
     mode : 'history',
     routes : route,
@@ -23,5 +34,5 @@ const router = new VueRouter({
 const vue = new Vue({
     el : '#app',
     components : {App},
-    router,axios
+    router,axios,store
 });

@@ -16,7 +16,7 @@
                 </td>
             </tr>
         </data-table>
-        <form-modal :form-data="formData">
+        <form-modal>
             <div class="row">
                 <div class="col-md-12">
                     <label>SubCategory Name</label>

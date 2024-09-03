@@ -1,27 +1,43 @@
 import axios from "axios";
+import {Validator} from "vee-validate";
 
 export  default {
     data(){
         return{
-            dataList : {},
-            formData : {}
         }
     },
     methods : {
         getDataList : function (){
             const _this = this;
-            axios.get(`${baseUrl}/${this.$route.meta.dataUrl}`)
+            axios.get(_this.urlGenerate())
                 .then(function (response){
-                    _this.dataList = response.data.result;
+                    _this.$store.commit('dataList', response.data.result);
                 });
         },
-        submitForm : function (formData = {}){
+        submitForm : function (formData = {}, optParms = {}, callback ){
             const _this = this;
-            const URl = `${baseUrl}/${this.$route.meta.dataUrl}`;
-            axios.post(URl, formData)
-                .then(function (response){
-                    _this.dataList = response.data.result;
-                });
+            _this.$validator.validateAll().then(valid => {
+                if (valid) {
+                    axios.post(_this.urlGenerate(), formData)
+                        .then(function (res){
+                            if (parseInt(res.data.status) === 2000){
+                                if (optParms.modalForm === undefined ){
+                                    _this.closeModal();
+                                }
+                                if (optParms.reloadList === undefined){
+                                    _this.getDataList();
+                                }
+                                if (typeof callback === 'function'){
+                                    callback(res.data.result);
+                                }
+                            }else if(parseInt(res.data.status) === 3000){
+                                console.log(res.data.result);
+                            }else{
+                                console.log('toster');
+                            }
+                        });
+                }
+            });
         }
     }
 }
