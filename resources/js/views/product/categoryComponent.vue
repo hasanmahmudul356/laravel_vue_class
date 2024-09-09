@@ -6,21 +6,20 @@
                 <td>{{ index+1 }}</td>
                 <td>{{ data.name }}</td>
                 <td>
-                    <a class="btn btn-outline-warning">
+                    <a @click="editInformation(data, data.id)" class="btn btn-outline-warning">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a class="btn btn-outline-danger">
+                    <a @click="deleteInformation(data.id, index)" class="btn btn-outline-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
             </tr>
         </data-table>
-        <form-modal @submit="submitForm()">
+        <form-modal @submit="submitForm(formData)">
             <div class="row">
                 <div class="col-md-12">
-                    <label>Category Name</label>
+                    <label>Name</label>
                     <input v-validate="'required'" v-model="formData.name" name="name" class="form-control" type="text">
-                    <span>{{ errors.first('name') }}</span>
                 </div>
             </div>
         </form-modal>

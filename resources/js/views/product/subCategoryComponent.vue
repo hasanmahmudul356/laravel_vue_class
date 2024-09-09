@@ -5,29 +5,30 @@
             <tr v-for="(data, index) in dataList">
                 <td>{{ index+1 }}</td>
                 <td>{{ data.name }}</td>
-                <td>Categry</td>
                 <td>
-                    <a class="btn btn-outline-warning">
+                    <a @click="editInformation(data, data.id)" class="btn btn-outline-warning">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a class="btn btn-outline-danger">
+                    <a @click="deleteInformation(data.id, index)" class="btn btn-outline-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
             </tr>
         </data-table>
-        <form-modal>
+        <form-modal @submit="submitForm(formData)">
             <div class="row">
                 <div class="col-md-12">
-                    <label>SubCategory Name</label>
-                    <input v-model="formData.name" class="form-control" type="text">
+                    <label>Category</label>
+                    <select v-validate="'required'" v-model="formData.category_id" name="name" class="form-control" type="text">
+                        <option value="">Select</option>
+                        <template v-for="(item, index) in requiredData.category">
+                            <option :value="item.id">{{ item.name }}</option>
+                        </template>
+                    </select>
                 </div>
                 <div class="col-md-12">
-                    <label>Category</label>
-                    <select v-model="formData.category_id" class="form-control">
-                        <option>Select</option>
-                        <option></option>
-                    </select>
+                    <label>Name</label>
+                    <input v-validate="'required'" v-model="formData.name" name="name" class="form-control" type="text">
                 </div>
             </div>
         </form-modal>
@@ -45,15 +46,19 @@ export default {
     components: {FormModal, DataTable, PageTop},
     data(){
         return {
-            tableHeading : ['Sl', 'name','Category', 'Action']
+            tableHeading : ['Sl', 'name', 'Action'],
         }
     },
     mounted() {
         this.getDataList();
+        this.getRequiredData(['category']);
+        this.$set(this.formData, 'name', '');
     }
 }
 </script>
 
 <style scoped>
-
+.datatable-top {
+    padding: 0 !important;
+}
 </style>

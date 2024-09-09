@@ -31,6 +31,14 @@ const router = new VueRouter({
     linkActiveClass : 'active'
 });
 
+import helper from './helper'
+helper(store, router);
+
+import VueSweetalert2 from 'vue-sweetalert2';
+Vue.use(VueSweetalert2);
+
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 const vue = new Vue({
     el : '#app',
     components : {App},
