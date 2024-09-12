@@ -129,7 +129,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "sideNavBar"
+  name: "sideNavBar",
+  methods: {
+    getConfigurations: function getConfigurations() {
+      var _this = this;
+      var url = _this.urlGenerate('api/configurations');
+      _this.httpReq('get', url, {}, {}, function (retData) {
+        _this.$store.commit('Config', retData.result);
+        _this.$store.commit('permissions', retData.result.permissions);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getConfigurations();
+  }
 });
 
 /***/ }),
@@ -556,104 +569,62 @@ var render = function render() {
     staticClass: "nav"
   }, [_c("div", {
     staticClass: "sb-sidenav-menu-heading"
-  }, [_vm._v("Core")]), _vm._v(" "), _c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/dashboard"
-    }
-  }, [_c("div", {
-    staticClass: "sb-nav-link-icon"
-  }, [_c("i", {
-    staticClass: "fas fa-tachometer-alt"
-  })]), _vm._v("\n                    Dashboard\n                ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Core")]), _vm._v(" "), _c("div", {
     staticClass: "sb-sidenav-menu-heading"
-  }, [_vm._v("Ecommerce")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "collapse",
-    attrs: {
-      id: "collapseLayouts",
-      "aria-labelledby": "headingOne",
-      "data-bs-parent": "#sidenavAccordion"
-    }
-  }, [_c("nav", {
-    staticClass: "sb-sidenav-menu-nested nav"
-  }, [_c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/product/category"
-    }
-  }, [_vm._v("Category")]), _vm._v(" "), _c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/product/sub_category"
-    }
-  }, [_vm._v("SubCategory")]), _vm._v(" "), _c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/product/product"
-    }
-  }, [_vm._v("Product")])], 1)]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
-    staticClass: "collapse",
-    attrs: {
-      id: "collapseLayouts2",
-      "aria-labelledby": "headingOne",
-      "data-bs-parent": "#sidenavAccordion"
-    }
-  }, [_c("nav", {
-    staticClass: "sb-sidenav-menu-nested nav"
-  }, [_c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/customer/customer"
-    }
-  }, [_vm._v("Customers")]), _vm._v(" "), _c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      to: "/admin/customer/orders"
-    }
-  }, [_vm._v("Orders")])], 1)])], 1)]), _vm._v(" "), _vm._m(2)])]);
+  }, [_vm._v("Ecommerce")]), _vm._v(" "), _vm._l(_vm.Config.menus, function (menu, mIndex) {
+    return [menu.sub_menus.length > 0 ? [_c("a", {
+      staticClass: "nav-link collapsed",
+      attrs: {
+        href: "#",
+        "data-bs-toggle": "collapse",
+        "data-bs-target": "#collapseLayouts",
+        "aria-expanded": "false",
+        "aria-controls": "collapseLayouts"
+      }
+    }, [_vm._m(0, true), _vm._v(" "), _c("span", [_vm._v(_vm._s(menu.name))]), _vm._v(" "), _vm._m(1, true)]), _vm._v(" "), _c("div", {
+      staticClass: "collapse",
+      attrs: {
+        id: "collapseLayouts",
+        "aria-labelledby": "headingOne",
+        "data-bs-parent": "#sidenavAccordion"
+      }
+    }, [_c("nav", {
+      staticClass: "sb-sidenav-menu-nested nav"
+    }, [_vm._l(menu.sub_menus, function (subMenu, sIndex) {
+      return [_c("router-link", {
+        staticClass: "nav-link",
+        attrs: {
+          to: subMenu.link
+        }
+      }, [_vm._v(_vm._s(subMenu.name))])];
+    })], 2)])] : [_c("router-link", {
+      staticClass: "nav-link",
+      attrs: {
+        to: menu.link
+      }
+    }, [_c("div", {
+      staticClass: "sb-nav-link-icon"
+    }, [_c("i", {
+      staticClass: "fas fa-tachometer-alt"
+    })]), _vm._v("\n                            " + _vm._s(menu.name) + "\n                        ")])]];
+  })], 2)]), _vm._v(" "), _vm._m(2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("a", {
-    staticClass: "nav-link collapsed",
-    attrs: {
-      href: "#",
-      "data-bs-toggle": "collapse",
-      "data-bs-target": "#collapseLayouts",
-      "aria-expanded": "false",
-      "aria-controls": "collapseLayouts"
-    }
-  }, [_c("div", {
+  return _c("div", {
     staticClass: "sb-nav-link-icon"
   }, [_c("i", {
     staticClass: "fas fa-columns"
-  })]), _vm._v(" "), _c("span", [_vm._v("Product")]), _vm._v(" "), _c("div", {
-    staticClass: "sb-sidenav-collapse-arrow"
-  }, [_c("i", {
-    staticClass: "fas fa-angle-down"
-  })])]);
+  })]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("a", {
-    staticClass: "nav-link collapsed",
-    attrs: {
-      href: "#",
-      "data-bs-toggle": "collapse",
-      "data-bs-target": "#collapseLayouts2",
-      "aria-expanded": "false",
-      "aria-controls": "collapseLayouts2"
-    }
-  }, [_c("div", {
-    staticClass: "sb-nav-link-icon"
-  }, [_c("i", {
-    staticClass: "fas fa-columns"
-  })]), _vm._v(" "), _c("span", [_vm._v("Customer")]), _vm._v(" "), _c("div", {
+  return _c("div", {
     staticClass: "sb-sidenav-collapse-arrow"
   }, [_c("i", {
     staticClass: "fas fa-angle-down"
-  })])]);
+  })]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -843,7 +814,7 @@ var render = function render() {
       tableHeading: _vm.tableHeading
     }
   }, _vm._l(_vm.dataList, function (data, index) {
-    return _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.name))]), _vm._v(" "), _c("td", [_c("a", {
+    return _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.name))]), _vm._v(" "), _c("td", [_vm.permissions.includes("category_edit") ? _c("a", {
       staticClass: "btn btn-outline-warning",
       on: {
         click: function click($event) {
@@ -852,7 +823,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fa fa-pencil"
-    })]), _vm._v(" "), _c("a", {
+    })]) : _vm._e(), _vm._v(" "), _vm.can("category_delete") ? _c("a", {
       staticClass: "btn btn-outline-danger",
       on: {
         click: function click($event) {
@@ -861,7 +832,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fa fa-trash"
-    })])])]);
+    })]) : _vm._e()])]);
   }), 0), _vm._v(" "), _c("form-modal", {
     on: {
       submit: function submit($event) {
@@ -1225,6 +1196,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     requiredData: function requiredData() {
       return this.$store.getters.requiredData;
+    },
+    Config: function Config() {
+      return this.$store.getters.Config;
+    },
+    permissions: function permissions() {
+      return this.$store.getters.permissions;
     }
   }
 });
@@ -1282,6 +1259,9 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
         if (parseInt(res.data.status) === 3000) {
+          return;
+        }
+        if (parseInt(res.data.status) === 4000) {
           return;
         }
         if (typeof callback === 'function') {
@@ -1438,6 +1418,12 @@ var getters = {
   },
   requiredData: function requiredData(state) {
     return state.requiredData;
+  },
+  Config: function Config(state) {
+    return state.Config;
+  },
+  permissions: function permissions(state) {
+    return state.permissions;
   }
 };
 
@@ -1497,6 +1483,12 @@ var mutations = {
   },
   requiredData: function requiredData(state, data) {
     state.requiredData = data;
+  },
+  Config: function Config(state, data) {
+    state.Config = data;
+  },
+  permissions: function permissions(state, data) {
+    state.permissions = data;
   }
 };
 
@@ -1518,7 +1510,9 @@ var state = {
   dataList: {},
   formData: {},
   updateId: '',
-  formType: 1
+  formType: 1,
+  Config: {},
+  permissions: []
 };
 
 /***/ }),

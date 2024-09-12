@@ -6,10 +6,10 @@
                 <td>{{ index+1 }}</td>
                 <td>{{ data.name }}</td>
                 <td>
-                    <a @click="editInformation(data, data.id)" class="btn btn-outline-warning">
+                    <a v-if="permissions.includes('category_edit')" @click="editInformation(data, data.id)" class="btn btn-outline-warning">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a @click="deleteInformation(data.id, index)" class="btn btn-outline-danger">
+                    <a v-if="can('category_delete')" @click="deleteInformation(data.id, index)" class="btn btn-outline-danger">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
