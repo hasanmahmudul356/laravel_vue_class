@@ -8,3 +8,6 @@ mix.alias({
 
 mix.js('resources/js/app.js', 'public/js').vue();
 mix.sass('resources/css/app.scss', 'public/css');
+
+mix.js('resources/js/app_frontend.js', 'public/js').vue();
+// mix.sass('resources/css/app_frontend.scss', 'public/css');

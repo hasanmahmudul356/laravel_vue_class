@@ -27,6 +27,7 @@ trait Helper
     public function can($permissionName)
     {
         $permissions = $this->authPermissions();
+
         if (in_array($permissionName, $permissions)){
             return true;
         };

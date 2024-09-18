@@ -33,17 +33,26 @@ class SupportController extends Controller
     public function getConfigurations()
     {
         $permittedModuleId = DB::table('role_modules')->where('role_id', auth()->user()->role_id)->get()->pluck('module_id')->toArray();
+
         $data['menus'] = Module::where('parent_id', 0)
-            ->whereIN('id', $permittedModuleId)
-            ->with(['sub_menus' => function ($query) use ($permittedModuleId) {
-                $query->whereIN('id', $permittedModuleId);
-                $query->with(['sub_menus' => function ($query) {
-                    $query->with('sub_menus');
-                }]);
-            }])->get();
+            ->whereIn('id', $permittedModuleId)
+            ->with(['sub_menus'=>function ($subMenus) use ($permittedModuleId) {
+                $subMenus->with('sub_menus');
+                $subMenus->whereIn('id', $permittedModuleId);
+            }])
+            ->get()->toArray();
 
         $data['permissions'] = $this->authPermissions();
 
         return $this->returnData(2000, $data);
     }
 }
+//
+//$data['menus'] = Module::where('parent_id', 0)
+//    ->whereIN('id', $permittedModuleId)
+//    ->with(['sub_menus' => function ($query) use ($permittedModuleId) {
+//        $query->whereIN('id', $permittedModuleId);
+//        $query->with(['sub_menus' => function ($query) {
+//            $query->with('sub_menus');
+//        }]);
+//    }])->get();

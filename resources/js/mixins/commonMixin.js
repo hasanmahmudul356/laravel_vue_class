@@ -68,6 +68,15 @@ export  default {
                     callback(result.isConfirmed);
                 }
             });
+        },
+        can :function (permissionName){
+            const _this = this;
+            var hasPermission = _this.permissions.includes(permissionName);
+            if (hasPermission){
+                return true;
+            }
+            return false;
+
         }
     },
     computed : {

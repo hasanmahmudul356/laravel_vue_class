@@ -33,7 +33,7 @@ class ModuleTableSeeder extends Seeder
                 'name' => 'Product',
                 'key' => 'product',
                 'link' => '#',
-                'permission' => ['add', 'view', 'edit', 'delete'],
+                'permission' => ['add', 'view', 'edit', 'delete', 'print', 'export',],
                 'submenus' => [
                     [
                         'name' => 'Category',
@@ -52,6 +52,27 @@ class ModuleTableSeeder extends Seeder
                         'name' => 'Products',
                         'key' => 'products',
                         'link' => '/admin/product/product',
+                        'permission' => ['add', 'view', 'edit', 'delete'],
+                    ],
+                ]
+            ],
+            [
+                'name' => 'Customer',
+                'key' => 'customer',
+                'link' => '#',
+                'permission' => ['add', 'view', 'edit', 'delete', 'print', 'export',],
+                'submenus' => [
+                    [
+                        'name' => 'Sales',
+                        'key' => 'sales',
+                        'link' => '/admin/product/sales',
+                        'permission' => ['add', 'view', 'edit', 'delete'],
+                        'submenus' => []
+                    ],
+                    [
+                        'name' => 'Orders',
+                        'key' => 'order',
+                        'link' => '/admin/product/order',
                         'permission' => ['add', 'view', 'edit', 'delete'],
                     ],
                 ]
@@ -103,7 +124,7 @@ class ModuleTableSeeder extends Seeder
 
                 foreach ($submenu['permission'] as $permission) {
                     $subPermissionModel = new Permission();
-                    $subPermissionModel->module_id = $module->id;
+                    $subPermissionModel->module_id = $subModule->id;
                     $subPermissionModel->name = $submenu['key']."_".$permission;
                     $subPermissionModel->save();
 
